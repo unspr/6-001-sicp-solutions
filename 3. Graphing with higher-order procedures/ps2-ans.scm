@@ -47,4 +47,46 @@
 ((draw-points-squeezed-to-window g3 200) alternative-unit-circle)
 
 
+; e6
+; ((draw-connected g1 200) (gosperize unit-line))
+(define (show-points-gosper window level number-of-points initial-curve)
+    ((draw-points-on window number-of-points)
+        ((repeated gosperize level) initial-curve)))
+(show-points-gosper g1 3 200 unit-line)
 
+;((draw-connected g1 200) (param-gosper 3 (lambda (level) (/ pi 7))))
+
+; e7
+(define (param-gosperize theta)
+    (lambda (curve)
+        (put-in-standard-position
+            (connect-ends
+                ((rotate-around-origin theta) curve)
+                ((rotate-around-origin (- theta)) curve)))))
+
+;((draw-connected g1 2000) ((param-gosperize (/ pi 4)) unit-line))                
+;((draw-connected g1 200) (param-gosper 3 (lambda (level) (/ pi 7))))
+;((draw-connected g1 200) (param-gosper 3 (lambda (level) (/ pi (+ 2 level)))))
+((draw-connected g1 200) (param-gosper 3 (lambda (level) (/ pi (expt 1.3 level)))))
+
+;(trace unit-line)
+;(trace x-of)
+;(trace gosperize)
+;(trace param-gosperize)
+(show-time (lambda () ((gosper-curve 10) .1)))
+(show-time (lambda () ((param-gosper 5 (lambda (x) pi/4)) .1)))
+;(untrace gosperize)
+;(untrace param-gosperize)
+;(untrace x-of)
+;(untrace unit-line)
+
+; e8
+;(define rotate-around-origin bens-rotate)
+;(trace x-of)
+;((gosper-curve 1) .1)
+;(untrace x-of)
+
+
+; e9
+;((draw-connected g1 200) (param-gosper 4 (lambda (level) (/ pi (+ 6 level)))))
+; give up
